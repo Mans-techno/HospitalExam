@@ -65,3 +65,9 @@ def logout_view(request):
 def specialty_list_view(request):
     specialties = Specialty.objects.all()
     return render(request, 'specialty_list.html', context={'specialties': specialties})
+
+
+def hospital_list_view(request, pk):
+    specialty = get_object_or_404(Specialty, pk=pk)
+    hospitals = Hospital.objects.filter(doctors__specialty=specialty).distinct()
+    return render(request, 'hospital_list.html', context={'specialty': specialty, 'hospitals': hospitals})

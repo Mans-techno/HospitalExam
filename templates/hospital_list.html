@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Больницы</title>
+</head>
+<body>
+    <h1>{{ specialty.name }} — выберите больницу</h1>
+
+    <ul>
+        {% for hospital in hospitals %}
+            <li>
+                <b>{{ hospital.name }}</b>, {{ hospital.city.name }}<br>
+                {{ hospital.address }}<br>
+                {{ hospital.phone }}
+            </li>
+        {% empty %}
+            <li>Больниц с такой специальностью пока нет</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'specialty_list' %}">Назад к специальностям</a></p>
+</body>
+</html>

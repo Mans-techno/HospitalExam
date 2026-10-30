@@ -10,7 +10,7 @@
 
     <ul>
         {% for specialty in specialties %}
-            <li>{{ specialty.name }}</li>
+            <li><a href="{% url 'hospital_list' specialty.pk %}">{{ specialty.name }}</a></li>
         {% empty %}
             <li>Специальностей пока нет</li>
         {% endfor %}

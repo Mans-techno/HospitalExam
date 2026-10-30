@@ -60,3 +60,8 @@ def logout_view(request):
         return redirect('home')
 
     return render(request, 'logout.html')
+
+
+def specialty_list_view(request):
+    specialties = Specialty.objects.all()
+    return render(request, 'specialty_list.html', context={'specialties': specialties})

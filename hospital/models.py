@@ -36,7 +36,7 @@ class Doctor(models.Model):
     experience = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.experience
+        return self.user.username
 
 
 class Appointment(models.Model):
@@ -55,7 +55,7 @@ class Appointment(models.Model):
         unique_together = ['doctor', 'date', 'time']
 
     def __str__(self):
-        return self.date
+        return str(self.date)
 
 
 class emailconfirmationtoken(models.Model):

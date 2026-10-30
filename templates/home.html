@@ -8,6 +8,8 @@
 <body>
     <h1>Запись к врачу — Душанбе</h1>
 
+    <p><a href="{% url 'specialty_list' %}">Записаться к врачу</a></p>
+
     {% if user.is_authenticated %}
         <p>Привет, {{ user.email }}</p>
         <a href="{% url 'logout' %}">Выйти</a>

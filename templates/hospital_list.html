@@ -11,7 +11,7 @@
     <ul>
         {% for hospital in hospitals %}
             <li>
-                <b>{{ hospital.name }}</b>, {{ hospital.city.name }}<br>
+                <a href="{% url 'doctor_list' specialty.pk hospital.pk %}"><b>{{ hospital.name }}</b></a>, {{ hospital.city.name }}<br>
                 {{ hospital.address }}<br>
                 {{ hospital.phone }}
             </li>

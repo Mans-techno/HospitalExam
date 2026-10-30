@@ -71,3 +71,10 @@ def hospital_list_view(request, pk):
     specialty = get_object_or_404(Specialty, pk=pk)
     hospitals = Hospital.objects.filter(doctors__specialty=specialty).distinct()
     return render(request, 'hospital_list.html', context={'specialty': specialty, 'hospitals': hospitals})
+
+
+def doctor_list_view(request, pk, hospital_pk):
+    specialty = get_object_or_404(Specialty, pk=pk)
+    hospital = get_object_or_404(Hospital, pk=hospital_pk)
+    doctors = Doctor.objects.filter(specialty=specialty, hospital=hospital)
+    return render(request, 'doctor_list.html', context={'specialty': specialty, 'hospital': hospital, 'doctors': doctors})

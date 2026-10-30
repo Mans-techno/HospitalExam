@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои записи</title>
+</head>
+<body>
+    <h1>Мои записи</h1>
+
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                <b>{{ appointment.date|date:'d.m.Y' }} {{ appointment.time|time:'H:i' }}</b> —
+                {{ appointment.doctor.user.get_full_name|default:appointment.doctor.user.username }}
+                ({{ appointment.doctor.specialty.name }}), {{ appointment.doctor.hospital.name }}<br>
+                Статус: {{ appointment.get_status_display }}<br>
+                Жалоба: {{ appointment.complaint }}<br>
+                {% if appointment.status == 'scheduled' %}
+                    <a href="{% url 'appointment_update' appointment.pk %}">Изменить</a>
+                    <a href="{% url 'appointment_delete' appointment.pk %}">Отменить</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>Записей пока нет</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'specialty_list' %}">Записаться к врачу</a></p>
+    <p><a href="{% url 'home' %}">На главную</a></p>
+</body>
+</html>

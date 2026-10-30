@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запись к врачу</title>
+</head>
+<body>
+    {% if appointment %}
+        <h1>Изменить запись</h1>
+    {% else %}
+        <h1>Запись к врачу</h1>
+    {% endif %}
+
+    <p>
+        <b>{{ doctor.user.get_full_name|default:doctor.user.username }}</b> — {{ doctor.specialty.name }}<br>
+        {{ doctor.hospital.name }}, {{ doctor.hospital.address }}
+    </p>
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Дата: <input type="date" name="date" value="{{ appointment.date|date:'Y-m-d' }}" required></p>
+        <p>Время: <input type="time" name="time" value="{{ appointment.time|time:'H:i' }}" required></p>
+        <p>Жалобы:<br>
+            <textarea name="complaint" rows="5" cols="40" required>{{ appointment.complaint }}</textarea>
+        </p>
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <p><a href="{% url 'appointment_list' %}">Мои записи</a></p>
+</body>
+</html>

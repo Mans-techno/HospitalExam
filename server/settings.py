@@ -140,3 +140,4 @@ MAILERS = {
 
 DEFAULT_FROM_EMAIL = 'sakhiev9900@gmail.com'
 SITE_URL = 'http://127.0.0.1:8002'
+LOGIN_URL = 'login'

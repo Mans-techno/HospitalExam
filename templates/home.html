@@ -12,6 +12,10 @@
 
     {% if user.is_authenticated %}
         <p>Привет, {{ user.email }}</p>
+        <a href="{% url 'appointment_list' %}">Мои записи</a>
+        {% if user.doctor %}
+            <a href="{% url 'doctor_appointments' %}">Кабинет врача</a>
+        {% endif %}
         <a href="{% url 'logout' %}">Выйти</a>
     {% else %}
         <a href="{% url 'login' %}">Войти</a>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кабинет врача</title>
+</head>
+<body>
+    <h1>Кабинет врача</h1>
+
+    <ul>
+        {% for appointment in appointments %}
+            <li>
+                <b>{{ appointment.date|date:'d.m.Y' }} {{ appointment.time|time:'H:i' }}</b> —
+                {{ appointment.patient.email }}<br>
+                Жалоба: {{ appointment.complaint }}<br>
+                Статус: {{ appointment.get_status_display }}<br>
+                {% if appointment.status == 'scheduled' %}
+                    <form method="post" action="{% url 'doctor_status' appointment.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" name="status" value="completed">Завершена</button>
+                        <button type="submit" name="status" value="no_show">Неявка</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>Записей пока нет</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'home' %}">На главную</a></p>
+</body>
+</html>

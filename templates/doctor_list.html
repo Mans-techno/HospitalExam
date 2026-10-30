@@ -13,7 +13,8 @@
         {% for doctor in doctors %}
             <li>
                 <b>{{ doctor.user.get_full_name|default:doctor.user.username }}</b><br>
-                Стаж: {{ doctor.experience }} лет
+                Стаж: {{ doctor.experience }} лет<br>
+                <a href="{% url 'appointment_create' doctor.pk %}">Записаться</a>
             </li>
         {% empty %}
             <li>Врачей пока нет</li>

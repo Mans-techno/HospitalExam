@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Специальности</title>
+</head>
+<body>
+    <h1>Специальности</h1>
+    <p><a href="{% url 'manage_specialty_create' %}">Добавить специальность</a></p>
+
+    <ul>
+        {% for specialty in specialties %}
+            <li>
+                {{ specialty.name }}
+                <a href="{% url 'manage_specialty_update' specialty.pk %}">Изменить</a>
+                <a href="{% url 'manage_specialty_delete' specialty.pk %}">Удалить</a>
+            </li>
+        {% empty %}
+            <li>Специальностей пока нет</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'home' %}">На главную</a></p>
+</body>
+</html>

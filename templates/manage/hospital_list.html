@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Больницы</title>
+</head>
+<body>
+    <h1>Больницы</h1>
+    <p><a href="{% url 'manage_hospital_create' %}">Добавить больницу</a></p>
+
+    <ul>
+        {% for hospital in hospitals %}
+            <li>
+                <b>{{ hospital.name }}</b>, {{ hospital.city.name }}, {{ hospital.address }}, {{ hospital.phone }}
+                <a href="{% url 'manage_hospital_update' hospital.pk %}">Изменить</a>
+                <a href="{% url 'manage_hospital_delete' hospital.pk %}">Удалить</a>
+            </li>
+        {% empty %}
+            <li>Больниц пока нет</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'home' %}">На главную</a></p>
+</body>
+</html>

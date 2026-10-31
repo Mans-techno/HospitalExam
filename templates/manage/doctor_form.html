@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Врач</title>
+</head>
+<body>
+    {% if doctor %}
+        <h1>Изменить врача</h1>
+        <p>{{ doctor.user.get_full_name|default:doctor.user.username }}</p>
+    {% else %}
+        <h1>Добавить врача</h1>
+    {% endif %}
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {% if not doctor %}
+            <p>Пользователь:
+                <select name="user" required>
+                    <option value="">--</option>
+                    {% for u in users %}
+                        <option value="{{ u.pk }}">{{ u.get_full_name|default:u.username }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+        {% endif %}
+        <p>Больница:
+            <select name="hospital" required>
+                <option value="">--</option>
+                {% for hospital in hospitals %}
+                    <option value="{{ hospital.pk }}" {% if doctor.hospital_id == hospital.pk %}selected{% endif %}>{{ hospital.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>Специальность:
+            <select name="specialty" required>
+                <option value="">--</option>
+                {% for specialty in specialties %}
+                    <option value="{{ specialty.pk }}" {% if doctor.specialty_id == specialty.pk %}selected{% endif %}>{{ specialty.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>Стаж, лет: <input type="number" name="experience" min="0" value="{{ doctor.experience }}" required></p>
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <p><a href="{% url 'manage_doctor_list' %}">Назад</a></p>
+</body>
+</html>

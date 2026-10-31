@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Город</title>
+</head>
+<body>
+    {% if city %}
+        <h1>Изменить город</h1>
+    {% else %}
+        <h1>Добавить город</h1>
+    {% endif %}
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Название: <input type="text" name="name" value="{{ city.name }}" required></p>
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <p><a href="{% url 'manage_city_list' %}">Назад</a></p>
+</body>
+</html>

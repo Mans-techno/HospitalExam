@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Специальность</title>
+</head>
+<body>
+    {% if specialty %}
+        <h1>Изменить специальность</h1>
+    {% else %}
+        <h1>Добавить специальность</h1>
+    {% endif %}
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Название: <input type="text" name="name" value="{{ specialty.name }}" required></p>
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <p><a href="{% url 'manage_specialty_list' %}">Назад</a></p>
+</body>
+</html>

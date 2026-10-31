@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Больница</title>
+</head>
+<body>
+    {% if hospital %}
+        <h1>Изменить больницу</h1>
+    {% else %}
+        <h1>Добавить больницу</h1>
+    {% endif %}
+
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <p>Город:
+            <select name="city" required>
+                <option value="">--</option>
+                {% for city in cities %}
+                    <option value="{{ city.pk }}" {% if hospital.city_id == city.pk %}selected{% endif %}>{{ city.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>Название: <input type="text" name="name" value="{{ hospital.name }}" required></p>
+        <p>Адрес: <input type="text" name="address" value="{{ hospital.address }}" required></p>
+        <p>Телефон: <input type="text" name="phone" value="{{ hospital.phone }}" required></p>
+        <button type="submit">Сохранить</button>
+    </form>
+
+    <p><a href="{% url 'manage_hospital_list' %}">Назад</a></p>
+</body>
+</html>

@@ -17,6 +17,14 @@
             <a href="{% url 'doctor_appointments' %}">Кабинет врача</a>
         {% endif %}
         <a href="{% url 'logout' %}">Выйти</a>
+
+        {% if perms.hospital.view_hospital %}
+            <h2>Управление</h2>
+            <a href="{% url 'manage_city_list' %}">Города</a>
+            <a href="{% url 'manage_specialty_list' %}">Специальности</a>
+            <a href="{% url 'manage_hospital_list' %}">Больницы</a>
+            <a href="{% url 'manage_doctor_list' %}">Врачи</a>
+        {% endif %}
     {% else %}
         <a href="{% url 'login' %}">Войти</a>
         <a href="{% url 'register' %}">Регистрация</a>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Врачи</title>
+</head>
+<body>
+    <h1>Врачи</h1>
+    <p><a href="{% url 'manage_doctor_create' %}">Добавить врача</a></p>
+
+    <ul>
+        {% for doctor in doctors %}
+            <li>
+                <b>{{ doctor.user.get_full_name|default:doctor.user.username }}</b> —
+                {{ doctor.specialty.name }}, {{ doctor.hospital.name }}, стаж {{ doctor.experience }} лет
+                <a href="{% url 'manage_doctor_update' doctor.pk %}">Изменить</a>
+                <a href="{% url 'manage_doctor_delete' doctor.pk %}">Удалить</a>
+            </li>
+        {% empty %}
+            <li>Врачей пока нет</li>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{% url 'home' %}">На главную</a></p>
+</body>
+</html>

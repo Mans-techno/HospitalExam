@@ -1,33 +1,94 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Запись к врачу</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Запись к врачу — Душанбе</h1>
+    <header>
+        <a class="logo" href="{% url 'home' %}">✚ МедЗапись</a>
+        <nav>
+            {% if user.is_authenticated %}
+                <a href="{% url 'specialty_list' %}">Врачи</a>
+                <a href="{% url 'appointment_list' %}">Мои записи</a>
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
 
-    <p><a href="{% url 'specialty_list' %}">Записаться к врачу</a></p>
+    <section class="hero">
+        <div>
+            <span class="tag">Онлайн запись · Душанбе</span>
+            <h1>Запись к врачу <span>без очередей</span></h1>
+            <p>Выберите специальность, больницу и врача — и запишитесь на удобное время без звонков и регистратуры.</p>
+            {% if user.is_authenticated %}
+                <a class="big" href="{% url 'specialty_list' %}">Записаться к врачу →</a>
+            {% else %}
+                <a class="big" href="{% url 'login' %}">Войти</a>
+                <a class="light" href="{% url 'register' %}">Создать аккаунт</a>
+                <p class="hint">Чтобы увидеть врачей и записаться, войдите в аккаунт</p>
+            {% endif %}
+        </div>
+
+        <div class="tickets">
+            <div class="ticket t1">Специальность<b>Терапевт</b></div>
+            <div class="ticket t2">Больница<b>Городская №1</b></div>
+            <div class="ticket t3">Дата и время<b>12 ноября, 10:00</b></div>
+        </div>
+    </section>
+
+    <svg class="ecg" viewBox="0 0 1000 80" preserveAspectRatio="none">
+        <polyline points="0,40 220,40 240,40 255,20 270,60 285,5 300,75 315,40 470,40 485,30 500,40 700,40 715,20 730,60 745,5 760,75 775,40 1000,40"/>
+    </svg>
+
+    <div class="marquee">
+        <div>
+            Терапевт ✚ Кардиолог ✚ Невролог ✚ Педиатр ✚ Стоматолог ✚ Окулист ✚ Хирург ✚ ЛОР ✚
+            Терапевт ✚ Кардиолог ✚ Невролог ✚ Педиатр ✚ Стоматолог ✚ Окулист ✚ Хирург ✚ ЛОР ✚
+        </div>
+    </div>
+
+    <h2>Как записаться</h2>
+    <ul class="grid path">
+        <li><span class="icon">1</span><b>Специальность</b><br>Выберите нужного специалиста</li>
+        <li><span class="icon">2</span><b>Больница</b><br>Посмотрите адрес и телефон</li>
+        <li><span class="icon">3</span><b>Врач</b><br>Сравните врачей по стажу</li>
+        <li><span class="icon">4</span><b>Дата и время</b><br>Опишите жалобу и подтвердите</li>
+    </ul>
+
+    <h2>Почему удобно</h2>
+    <div class="bento">
+        <div class="b1"><b>Без очередей</b>Время приёма выбираете сами — не нужно ждать в регистратуре</div>
+        <div class="b2"><b>Все записи в одном месте</b>Изменить или отменить запись можно в пару кликов</div>
+        <div class="b3"><b>Больницы Душанбе</b>Адреса и телефоны рядом с каждым врачом</div>
+        <div class="b4"><b>Кабинет врача</b>Врач видит своих пациентов и отмечает приём</div>
+    </div>
 
     {% if user.is_authenticated %}
-        <p>Привет, {{ user.email }}</p>
+        <h2>Личный кабинет</h2>
+        <p>Вы вошли как {{ user.email }}</p>
         <a href="{% url 'appointment_list' %}">Мои записи</a>
         {% if user.doctor %}
             <a href="{% url 'doctor_appointments' %}">Кабинет врача</a>
         {% endif %}
-        <a href="{% url 'logout' %}">Выйти</a>
 
         {% if perms.hospital.view_hospital %}
             <h2>Управление</h2>
-            <a href="{% url 'manage_city_list' %}">Города</a>
-            <a href="{% url 'manage_specialty_list' %}">Специальности</a>
-            <a href="{% url 'manage_hospital_list' %}">Больницы</a>
-            <a href="{% url 'manage_doctor_list' %}">Врачи</a>
+            <ul class="grid">
+                <li><span class="icon">Г</span><a href="{% url 'manage_city_list' %}">Города</a></li>
+                <li><span class="icon">С</span><a href="{% url 'manage_specialty_list' %}">Специальности</a></li>
+                <li><span class="icon">Б</span><a href="{% url 'manage_hospital_list' %}">Больницы</a></li>
+                <li><span class="icon">В</span><a href="{% url 'manage_doctor_list' %}">Врачи</a></li>
+            </ul>
         {% endif %}
-    {% else %}
-        <a href="{% url 'login' %}">Войти</a>
-        <a href="{% url 'register' %}">Регистрация</a>
     {% endif %}
+
+    <footer>© 2026 МедЗапись — онлайн запись к врачу в Душанбе</footer>
 </body>
 </html>

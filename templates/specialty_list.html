@@ -1,21 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Специальности</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <h1>Выберите специальность</h1>
+    <header>
+        <a class="logo" href="{% url 'home' %}">✚ МедЗапись</a>
+        <nav>
+            {% if user.is_authenticated %}
+                <a href="{% url 'specialty_list' %}">Врачи</a>
+                <a href="{% url 'appointment_list' %}">Мои записи</a>
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </nav>
+    </header>
 
-    <ul>
+    <div class="steps">
+        <span class="active">1. Специальность</span>
+        <span>2. Больница</span>
+        <span>3. Врач</span>
+        <span>4. Дата и время</span>
+    </div>
+
+    <h1>Выберите специальность</h1>
+    <p class="hint">Какой специалист вам нужен?</p>
+
+    <ul class="grid">
         {% for specialty in specialties %}
-            <li><a href="{% url 'hospital_list' specialty.pk %}">{{ specialty.name }}</a></li>
+            <li>
+                <span class="icon">{{ specialty.name|first }}</span>
+                <a href="{% url 'hospital_list' specialty.pk %}">{{ specialty.name }}</a>
+            </li>
         {% empty %}
             <li>Специальностей пока нет</li>
         {% endfor %}
     </ul>
 
     <p><a href="{% url 'home' %}">На главную</a></p>
+    <footer>© 2026 МедЗапись — онлайн запись к врачу в Душанбе</footer>
 </body>
 </html>

@@ -72,17 +72,20 @@ def logout_view(request):
     return render(request, 'logout.html')
 
 
+@login_required
 def specialty_list_view(request):
     specialties = Specialty.objects.all()
     return render(request, 'specialty_list.html', context={'specialties': specialties})
 
 
+@login_required
 def hospital_list_view(request, pk):
     specialty = get_object_or_404(Specialty, pk=pk)
     hospitals = Hospital.objects.filter(doctors__specialty=specialty).distinct()
     return render(request, 'hospital_list.html', context={'specialty': specialty, 'hospitals': hospitals})
 
 
+@login_required
 def doctor_list_view(request, pk, hospital_pk):
     specialty = get_object_or_404(Specialty, pk=pk)
     hospital = get_object_or_404(Hospital, pk=hospital_pk)
